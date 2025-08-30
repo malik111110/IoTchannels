@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>chanIoT Dashboard</title>
+</head>
+<body>
+    <h1>chanIoT Live Dashboard</h1>
+    <ul id="events"></ul>
+
+    <script>
+        var socket = new WebSocket("ws://localhost:8080/ws");
+
+        socket.onmessage = function(event) {
+            var eventsList = document.getElementById('events');
+            var eventData = JSON.parse(event.data);
+            var newEvent = document.createElement('li');
+            newEvent.appendChild(document.createTextNode(
+                `[${eventData.DeviceID}] ${eventData.Type} -> ${eventData.Value} at ${eventData.Time}`
+            ));
+            eventsList.appendChild(newEvent);
+        };
+    </script>
+
+</body>
+</html>
